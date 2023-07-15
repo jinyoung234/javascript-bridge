@@ -1,3 +1,4 @@
+const BridgeMaker = require('./BridgeMaker');
 const { GAME, USER } = require('./constants/Message');
 const BridgeGame = require('./domains/BridgeGame');
 const Validator = require('./validator');
@@ -12,8 +13,9 @@ class GameController {
   // eslint-disable-next-line class-methods-use-this
   *run() {
     OutputView.print(GAME.START);
+    let bridgeSize = 0;
     while (true) {
-      const bridgeSize = yield GameController.#inputBridgeSize;
+      bridgeSize = yield GameController.#inputBridgeSize;
       if (Validator.isValidateBridgeSize(Number(bridgeSize))) break;
     }
   }
