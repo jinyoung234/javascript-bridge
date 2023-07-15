@@ -4,13 +4,13 @@ const BridgeGame = require('./domains/BridgeGame');
 const Validator = require('./validator');
 const InputView = require('./view/InputView');
 const OutputView = require('./view/OutputView');
+const BridgeRandomNumberGenerator = require('./BridgeRandomNumberGenerator');
 
 class GameController {
   constructor() {
     this.bridgeGame = new BridgeGame();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   *run() {
     OutputView.print(GAME.START);
     let bridgeSize = 0;
@@ -18,6 +18,19 @@ class GameController {
       bridgeSize = yield GameController.#inputBridgeSize;
       if (Validator.isValidateBridgeSize(Number(bridgeSize))) break;
     }
+    this.#makeBridge(bridgeSize);
+  }
+
+  /**
+   * 유저가 입력한 다리 길이를 통해 다리를 생성 후 BridgeGame 클래스 내 answerBridge 필드에 값을 할당하는 메서드
+   * @param {number} bridgeSize - 유저가 입력한 다리 길이
+   */
+  #makeBridge(bridgeSize) {
+    const answerBridge = BridgeMaker.makeBridge(
+      bridgeSize,
+      BridgeRandomNumberGenerator.generate,
+    );
+    this.bridgeGame.setAnswerBridge(answerBridge);
   }
 
   /**
