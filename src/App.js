@@ -1,4 +1,5 @@
 const GameController = require('./GameController');
+const runGenerator = require('./utils/runGenerator');
 
 class App {
   constructor() {
@@ -6,7 +7,7 @@ class App {
   }
 
   play() {
-    this.controller.run();
+    runGenerator(this.controller.run.bind(this.controller));
   }
 }
 

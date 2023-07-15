@@ -1,5 +1,6 @@
-const { GAME } = require('./constants/Message');
+const { GAME, USER } = require('./constants/Message');
 const BridgeGame = require('./domains/BridgeGame');
+const InputView = require('./view/InputView');
 const OutputView = require('./view/OutputView');
 
 class GameController {
@@ -8,8 +9,21 @@ class GameController {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  run() {
+  *run() {
     OutputView.print(GAME.START);
+    const bridgeSize = yield GameController.#inputBridgeSize;
+    console.log(bridgeSize);
+  }
+
+  /**
+   * 유저가 다리 사이즈를 입력하기 위한 메서드
+   * @param {*} callback - 유저가 입력한 값을 yield 키워드에서 사용하기 위한 callback
+   * @returns {void}
+   */
+  static #inputBridgeSize(callback) {
+    InputView.readBridgeSize(USER.INPUT_BRIDGE_SIZE, (inputValue) => {
+      callback(inputValue);
+    });
   }
 }
 
