@@ -5,6 +5,7 @@ const Validator = require('./validator');
 const InputView = require('./view/InputView');
 const OutputView = require('./view/OutputView');
 const BridgeRandomNumberGenerator = require('./BridgeRandomNumberGenerator');
+const { ERROR } = require('./constants/Message');
 
 class GameController {
   constructor() {
@@ -13,11 +14,7 @@ class GameController {
 
   *run() {
     OutputView.print(GAME.START);
-    let bridgeSize = 0;
-    while (true) {
-      bridgeSize = yield GameController.#inputBridgeSize;
-      if (Validator.isValidateBridgeSize(Number(bridgeSize))) break;
-    }
+    const bridgeSize = yield* GameController.#createBridgeSize();
     this.#makeBridge(bridgeSize);
   }
 
@@ -42,6 +39,15 @@ class GameController {
     InputView.readBridgeSize(USER.INPUT_BRIDGE_SIZE, (inputValue) => {
       callback(inputValue);
     });
+  }
+
+  static *#createBridgeSize() {
+    let bridgeSize = 0;
+    while (true) {
+      bridgeSize = yield GameController.#inputBridgeSize;
+      if (Validator.isValidate(!Number(bridgeSize), ERROR.BRIDGE_SIZE)) break;
+    }
+    return bridgeSize;
   }
 }
 
