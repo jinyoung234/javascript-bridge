@@ -13,8 +13,6 @@ class BridgeGame {
 
   #bridge;
 
-  #prevBridge;
-
   #round;
 
   #count;
@@ -77,10 +75,6 @@ class BridgeGame {
   getBridge() {
     const [topBridge, bottomBridge] = this.#bridge;
     return [`[ ${topBridge.join(' | ')} ]`, `[ ${bottomBridge.join(' | ')} ]`];
-  }
-
-  getBridgeSize() {
-    return this.#answerBridge.length;
   }
 
   getStatus() {
