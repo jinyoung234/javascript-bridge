@@ -76,7 +76,8 @@ class BridgeGame {
 
   getBridge() {
     const [topBridge, bottomBridge] = this.#bridge;
-    return [`[ ${topBridge.join(' | ')} ]`, `[ ${bottomBridge.join(' | ')} ]`];
+    const bridge = [`[ ${topBridge.join(' | ')} ]`, `[ ${bottomBridge.join(' | ')} ]`];
+    return bridge;
   }
 
   getStatus() {
