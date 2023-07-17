@@ -1,9 +1,4 @@
-const STATUS_TABLE = {
-  '[SUCCESS]D': [' ', 'O'],
-  '[SUCCESS]U': ['O', ' '],
-  '[FAIL]D': [' ', 'X'],
-  '[FAIL]U': ['X', ' '],
-};
+const { BRIDGE_TABLE } = require('../constants/bridgeGame');
 
 /**
  * 다리 건너기 게임을 관리하는 클래스
@@ -37,7 +32,7 @@ class BridgeGame {
   }
 
   #setBridge(type) {
-    const [top, bottom] = STATUS_TABLE[type];
+    const [top, bottom] = BRIDGE_TABLE[type];
     const [topBridge, bottomBridge] = this.#bridge;
     topBridge.push(top);
     bottomBridge.push(bottom);
