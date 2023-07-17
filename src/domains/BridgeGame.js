@@ -31,8 +31,8 @@ class BridgeGame {
   move(moveType) {
     this.#round += 1;
     const answer = this.#answerBridge[this.#round - 1];
-    const type = BridgeGame.#isSuccess(moveType, answer);
-    this.#setBridge(type);
+    const bridgeType = BridgeGame.#createBridgeType(moveType, answer);
+    this.#setBridge(bridgeType);
   }
 
   #setBridge(type) {
@@ -42,7 +42,7 @@ class BridgeGame {
     bottomBridge.push(bottom);
   }
 
-  static #isSuccess(moveType, answerMoveType) {
+  static #createBridgeType(moveType, answerMoveType) {
     const [isMoveBottom, isMoveTop] = [moveType === INPUT_BRIDGE.D, moveType === INPUT_BRIDGE.U];
     const [isSuccess, isFail] = [moveType === answerMoveType, moveType !== answerMoveType];
     if (isSuccess && isMoveBottom) return SUCCESS.BOTTOM;
