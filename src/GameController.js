@@ -16,6 +16,29 @@ class GameController {
     OutputView.print(GAME.START);
     const bridgeSize = yield* GameController.#createBridgeSize();
     this.#makeBridge(bridgeSize);
+    yield* this.#moveBridge();
+  }
+
+  *#moveBridge() {
+    let status = '';
+    while (status !== '실패') {
+      const userMoveType = yield* GameController.#createBridgeMoveType();
+      this.bridgeGame.move(userMoveType);
+      status = this.bridgeGame.getStatus();
+      OutputView.printMap(this.bridgeGame.getBridge());
+    }
+    return yield* this.#fail(status);
+  }
+
+  *#fail(status) {
+    const command = yield* GameController.#createGameCommand();
+    if (command === 'R') {
+      this.bridgeGame.retry();
+      yield* this.#moveBridge();
+      return;
+    }
+    const [[top, bottom], count] = [this.bridgeGame.getBridge(), this.bridgeGame.getCount()];
+    OutputView.printResult({ top, bottom, status, count });
   }
 
   /**
@@ -23,10 +46,7 @@ class GameController {
    * @param {number} bridgeSize - 유저가 입력한 다리 길이
    */
   #makeBridge(bridgeSize) {
-    const answerBridge = BridgeMaker.makeBridge(
-      bridgeSize,
-      BridgeRandomNumberGenerator.generate,
-    );
+    const answerBridge = BridgeMaker.makeBridge(bridgeSize, BridgeRandomNumberGenerator.generate);
     this.bridgeGame.setAnswerBridge(answerBridge);
   }
 
@@ -41,6 +61,11 @@ class GameController {
     });
   }
 
+  static *#createGameCommand() {
+    const command = yield GameController.#inputGameCommand;
+    return command;
+  }
+
   static *#createBridgeSize() {
     let bridgeSize = 0;
     while (true) {
@@ -48,6 +73,28 @@ class GameController {
       if (Validator.isValidate(!Number(bridgeSize), ERROR.BRIDGE_SIZE)) break;
     }
     return bridgeSize;
+  }
+
+  static *#createBridgeMoveType() {
+    let moveType = '';
+    while (true) {
+      moveType = yield GameController.#inputBridgeMoveType;
+      const isIncorrectMoveType = moveType !== 'D' && moveType !== 'U';
+      if (Validator.isValidate(isIncorrectMoveType, ERROR.MOVE_TYPE)) break;
+    }
+    return moveType;
+  }
+
+  static #inputBridgeMoveType(callback) {
+    InputView.readMoving(USER.INPUT_MOVE_TYPE, (inputValue) => {
+      callback(inputValue);
+    });
+  }
+
+  static #inputGameCommand(callback) {
+    InputView.readGameCommand(USER.INPUT_GAME_COMMAND, (inputValue) => {
+      callback(inputValue);
+    });
   }
 }
 
