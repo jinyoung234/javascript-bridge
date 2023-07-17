@@ -1,7 +1,7 @@
 const { ERROR } = require('../constants/Message');
 const {
   BRIDGE_TABLE,
-  STATUS_TABLE: { SUCCESS, FAIL },
+  MOVE_TYPE_TABLE: { SUCCESS, FAIL },
 } = require('../constants/bridgeGame');
 const { INPUT_BRIDGE } = require('../constants/commands');
 

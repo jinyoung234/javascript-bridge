@@ -7,7 +7,7 @@ const BRIDGE_GAME = deepFreeze({
     '[FAIL]D': [' ', 'X'],
     '[FAIL]U': ['X', ' '],
   },
-  STATUS_TABLE: {
+  MOVE_TYPE_TABLE: {
     SUCCESS: {
       BOTTOM: '[SUCCESS]D',
       TOP: '[SUCCESS]U',
