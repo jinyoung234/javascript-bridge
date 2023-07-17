@@ -8,8 +8,7 @@ function deepFreeze(obj) {
   const propNames = Object.getOwnPropertyNames(tmpObj);
   propNames.forEach((name) => {
     const value = tmpObj[name];
-    tmpObj[name] =
-      value && typeof value === 'object' ? deepFreeze(value) : value;
+    return value && (typeof value === 'object' ? deepFreeze(value) : value);
   });
   return Object.freeze(tmpObj);
 }
