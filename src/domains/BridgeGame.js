@@ -1,3 +1,4 @@
+const { ERROR } = require('../constants/Message');
 const {
   BRIDGE_TABLE,
   STATUS_TABLE: { SUCCESS, FAIL },
@@ -49,7 +50,7 @@ class BridgeGame {
     if (isSuccess && isMoveTop) return SUCCESS.TOP;
     if (isFail && isMoveBottom) return FAIL.BOTTOM;
     if (isFail && isMoveTop) return FAIL.TOP;
-    throw new Error('잘못된 값 입니다.');
+    throw new Error(ERROR.MOVE_TYPE);
   }
 
   /**
