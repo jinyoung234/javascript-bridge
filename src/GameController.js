@@ -9,6 +9,7 @@ const { ERROR } = require('./constants/Message');
 const {
   STATUS_TABLE: { SUCCESS, FAIL },
 } = require('./constants/bridgeGame');
+const { INPUT_EXIT, INPUT_BRIDGE } = require('./constants/commands');
 
 class GameController {
   constructor() {
@@ -41,7 +42,7 @@ class GameController {
 
   *#fail(status) {
     const command = yield* GameController.#createGameCommand();
-    if (command === 'R') {
+    if (command === INPUT_EXIT.RESTART) {
       this.bridgeGame.retry();
       yield* this.#moveBridge();
       return;
@@ -88,7 +89,7 @@ class GameController {
     let moveType = '';
     while (true) {
       moveType = yield GameController.#inputBridgeMoveType;
-      const isIncorrectMoveType = moveType !== 'D' && moveType !== 'U';
+      const isIncorrectMoveType = moveType !== INPUT_BRIDGE.D && moveType !== INPUT_BRIDGE.U;
       if (Validator.isValidate(isIncorrectMoveType, ERROR.MOVE_TYPE)) break;
     }
     return moveType;

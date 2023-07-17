@@ -5,6 +5,10 @@ const COMMANDS = deepFreeze({
     U: 'U',
     D: 'D',
   },
+  INPUT_EXIT: {
+    RESTART: 'R',
+    QUIT: 'Q',
+  },
 });
 
 module.exports = COMMANDS;
