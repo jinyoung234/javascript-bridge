@@ -6,6 +6,9 @@ const InputView = require('./view/InputView');
 const OutputView = require('./view/OutputView');
 const BridgeRandomNumberGenerator = require('./BridgeRandomNumberGenerator');
 const { ERROR } = require('./constants/Message');
+const {
+  STATUS_TABLE: { SUCCESS, FAIL },
+} = require('./constants/bridgeGame');
 
 class GameController {
   constructor() {
@@ -21,13 +24,13 @@ class GameController {
 
   *#moveBridge() {
     let status = '';
-    while (status !== '성공' && status !== '실패') {
+    while (status !== SUCCESS && status !== FAIL) {
       const userMoveType = yield* GameController.#createBridgeMoveType();
       this.bridgeGame.move(userMoveType);
       status = this.bridgeGame.getStatus();
       OutputView.printMap(this.bridgeGame.getBridge());
     }
-    return status === '실패' ? yield* this.#fail(status) : this.#success(status);
+    return status === FAIL ? yield* this.#fail(status) : this.#success(status);
   }
 
   #success(status) {
