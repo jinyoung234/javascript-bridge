@@ -2,6 +2,7 @@ const { ERROR } = require('../constants/Message');
 const {
   BRIDGE_TABLE,
   MOVE_TYPE_TABLE: { SUCCESS, FAIL },
+  STATUS_TABLE,
 } = require('../constants/bridgeGame');
 const { INPUT_BRIDGE } = require('../constants/commands');
 
@@ -86,9 +87,9 @@ class BridgeGame {
     const isFinish = this.#round === this.#answerBridge.length;
     const isSuccessTop = !topBridge.some(isIncorrectBridge);
     const isSuccessBottom = !bottomBridge.some(isIncorrectBridge);
-    if (isFinish && isSuccessTop && isSuccessBottom) return '성공';
-    if (topBridge.includes('X') || bottomBridge.includes('X')) return '실패';
-    return '진행';
+    if (isFinish && isSuccessTop && isSuccessBottom) return STATUS_TABLE.SUCCESS;
+    if (topBridge.includes('X') || bottomBridge.includes('X')) return STATUS_TABLE.FAIL;
+    return STATUS_TABLE.PROGRESS;
   }
 
   getCount() {

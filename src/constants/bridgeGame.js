@@ -17,6 +17,11 @@ const BRIDGE_GAME = deepFreeze({
       TOP: '[FAIL]U',
     },
   },
+  STATUS_TABLE: {
+    SUCCESS: '성공',
+    FAIL: '실패',
+    PROGRESS: '진행',
+  },
 });
 
 module.exports = BRIDGE_GAME;
