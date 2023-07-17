@@ -82,9 +82,10 @@ class BridgeGame {
 
   getStatus() {
     const [topBridge, bottomBridge] = this.#bridge;
+    const isIncorrectBridge = (bridge) => bridge === 'X';
     const isFinish = this.#round === this.#answerBridge.length;
-    const isSuccessTop = !topBridge.some((bridge) => bridge === 'X');
-    const isSuccessBottom = !bottomBridge.some((bridge) => bridge === 'X');
+    const isSuccessTop = !topBridge.some(isIncorrectBridge);
+    const isSuccessBottom = !bottomBridge.some(isIncorrectBridge);
     if (isFinish && isSuccessTop && isSuccessBottom) return '성공';
     if (topBridge.includes('X') || bottomBridge.includes('X')) return '실패';
     return '진행';
