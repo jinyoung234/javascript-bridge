@@ -2,6 +2,7 @@ const {
   BRIDGE_TABLE,
   STATUS_TABLE: { SUCCESS, FAIL },
 } = require('../constants/bridgeGame');
+const { INPUT_BRIDGE } = require('../constants/commands');
 
 /**
  * 다리 건너기 게임을 관리하는 클래스
@@ -42,10 +43,12 @@ class BridgeGame {
   }
 
   static #isSuccess(moveType, answerMoveType) {
-    if (moveType === answerMoveType && moveType === 'D') return SUCCESS.BOTTOM;
-    if (moveType === answerMoveType && moveType === 'U') return SUCCESS.TOP;
-    if (moveType !== answerMoveType && moveType === 'D') return FAIL.BOTTOM;
-    if (moveType !== answerMoveType && moveType === 'U') return FAIL.TOP;
+    const [isMoveBottom, isMoveTop] = [moveType === INPUT_BRIDGE.D, moveType === INPUT_BRIDGE.U];
+    const [isSuccess, isFail] = [moveType === answerMoveType, moveType !== answerMoveType];
+    if (isSuccess && isMoveBottom) return SUCCESS.BOTTOM;
+    if (isSuccess && isMoveTop) return SUCCESS.TOP;
+    if (isFail && isMoveBottom) return FAIL.BOTTOM;
+    if (isFail && isMoveTop) return FAIL.TOP;
     throw new Error('잘못된 값 입니다.');
   }
 
