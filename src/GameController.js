@@ -21,13 +21,19 @@ class GameController {
 
   *#moveBridge() {
     let status = '';
-    while (status !== '실패') {
+    while (status !== '성공' && status !== '실패') {
       const userMoveType = yield* GameController.#createBridgeMoveType();
       this.bridgeGame.move(userMoveType);
       status = this.bridgeGame.getStatus();
       OutputView.printMap(this.bridgeGame.getBridge());
     }
-    return yield* this.#fail(status);
+    return status === '실패' ? yield* this.#fail(status) : this.#success(status);
+  }
+
+  #success(status) {
+    const [top, bottom] = this.bridgeGame.getBridge();
+    const count = this.bridgeGame.getCount();
+    OutputView.printResult({ top, bottom, status, count, isSuccess: true });
   }
 
   *#fail(status) {

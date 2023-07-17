@@ -18,7 +18,14 @@ const OutputView = {
    * <p>
    * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
-  printResult() {},
+  printResult({ top, bottom, status, count, isSuccess = '' }) {
+    Console.print(
+      `${
+        isSuccess && '\n'
+      }최종 게임 결과\n${top}\n${bottom}\n\n게임 성공 여부: ${status}\n총 시도한 횟수: ${count}`,
+    );
+    Console.close();
+  },
 
   /**
    * 콘솔로 필요한 메시지를 출력하기 위한 메서드
