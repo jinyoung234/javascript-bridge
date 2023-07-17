@@ -7,6 +7,16 @@ const BRIDGE_GAME = deepFreeze({
     '[FAIL]D': [' ', 'X'],
     '[FAIL]U': ['X', ' '],
   },
+  STATUS_TABLE: {
+    SUCCESS: {
+      BOTTOM: '[SUCCESS]D',
+      TOP: '[SUCCESS]U',
+    },
+    FAIL: {
+      BOTTOM: '[FAIL]D',
+      TOP: '[FAIL]U',
+    },
+  },
 });
 
 module.exports = BRIDGE_GAME;

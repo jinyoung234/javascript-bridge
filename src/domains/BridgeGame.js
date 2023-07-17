@@ -1,4 +1,7 @@
-const { BRIDGE_TABLE } = require('../constants/bridgeGame');
+const {
+  BRIDGE_TABLE,
+  STATUS_TABLE: { SUCCESS, FAIL },
+} = require('../constants/bridgeGame');
 
 /**
  * 다리 건너기 게임을 관리하는 클래스
@@ -39,10 +42,10 @@ class BridgeGame {
   }
 
   static #isSuccess(moveType, answerMoveType) {
-    if (moveType === answerMoveType && moveType === 'D') return '[SUCCESS]D';
-    if (moveType === answerMoveType && moveType === 'U') return '[SUCCESS]U';
-    if (moveType !== answerMoveType && moveType === 'D') return '[FAIL]D';
-    if (moveType !== answerMoveType && moveType === 'U') return '[FAIL]U';
+    if (moveType === answerMoveType && moveType === 'D') return SUCCESS.BOTTOM;
+    if (moveType === answerMoveType && moveType === 'U') return SUCCESS.TOP;
+    if (moveType !== answerMoveType && moveType === 'D') return FAIL.BOTTOM;
+    if (moveType !== answerMoveType && moveType === 'U') return FAIL.TOP;
     throw new Error('잘못된 값 입니다.');
   }
 
